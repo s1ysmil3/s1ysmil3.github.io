@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>s1ysmil3</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: #000;
+      color: #00ff00;
+      font-family: 'Courier New', monospace;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      text-align: left;
+      min-height: 100vh;
+      padding: 2rem;
+    }
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 2rem;
+    }
+    a.button {
+      display: block;
+      color: #00ff00;
+      text-decoration: none;
+      margin: 0.5rem 0;
+    }
+    a.button::before {
+      content: '> ';
+    }
+    .cursor {
+      display: inline-block;
+      width: 10px;
+      height: 1rem;
+      background: #00ff00;
+      animation: blink 1s steps(2, start) infinite;
+      vertical-align: bottom;
+    }
+    table {
+      margin-top: 2rem;
+      border-collapse: collapse;
+      width: 100%;
+      max-width: 500px;
+      color: #00ff00;
+      display: none;
+    }
+    th, td {
+      border: 1px solid #007700;
+      padding: 0.5rem;
+      text-align: left;
+    }
+    th {
+      background-color: #001100;
+    }
+    input {
+      width: 100%;
+      background: #000;
+      border: none;
+      color: #00ff00;
+      font-family: 'Courier New', monospace;
+    }
+    input:focus {
+      outline: none;
+    }
+    .button-group {
+      margin-top: 1rem;
+    }
+    button.action {
+      background: none;
+      color: #00ff00;
+      border: 1px solid #00ff00;
+      padding: 0.4rem 1rem;
+      font-family: 'Courier New', monospace;
+      cursor: pointer;
+      margin-right: 0.5rem;
+    }
+    button.action:hover {
+      background-color: #001100;
+    }
+    footer {
+      margin-top: 4rem;
+      font-size: 0.8rem;
+      color: #007700;
+    }
+  </style>
+</head>
+<body>
+  <h1>s1ysmil3<span class="cursor"></span></h1>
+
+  <a class="button" href="https://t.me/s1ysmil3" target="_blank">Telegram</a>
+  <a class="button" href="https://youtube.com/@a1i_yasen" target="_blank">YouTube Channel</a>
+  <a class="button" href="mailto:a1i.yasen@proton.me">Mail Your Device</a>
+
+  <div class="button-group">
+    <button class="action" onclick="toggleTable()">[p] Show/Hide Products</button>
+    <button class="action" onclick="downloadCSV()">Export CSV</button>
+  </div>
+
+  <table id="priceTable">
+    <thead>
+      <tr><th>Product</th><th>Price</th></tr>
+    </thead>
+    <tbody>
+      <!-- 20 editable product rows -->
+      <script>
+        document.write(
+          Array.from({ length: 20 }, (_, i) => `
+            <tr>
+              <td><input type="text" placeholder="Item ${i + 1}"></td>
+              <td><input type="text" placeholder="$0.00"></td>
+            </tr>
+          `).join('')
+        );
+      </script>
+    </tbody>
+  </table>
+
+  <footer>
+    -- terminal mode active --
+  </footer>
+
+  <script>
+    const table = document.getElementById('priceTable');
+
+    function toggleTable() {
+      table.style.display = table.style.display === 'none' ? 'table' : 'none';
+    }
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key.toLowerCase() === 'p') toggleTable();
+    });
+
+    function downloadCSV() {
+      const rows = Array.from(table.querySelectorAll('tbody tr'));
+      const csv = rows.map(row => {
+        const cols = row.querySelectorAll('input');
+        return Array.from(cols).map(input => input.value).join(',');
+      }).join('\n');
+
+      const blob = new Blob([csv], { type: 'text/csv' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'products.csv';
+      a.click();
+    }
+  </script>
+</body>
+</html>
