@@ -3,305 +3,283 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="s1ysmil3 - Terminal-style personal hub">
   <title>s1ysmil3</title>
   <style>
+    /* 🍎 Apple-inspired: clean, fast, premium */
     :root {
-      --bg: #000;
-      --text: #00ff00;
-      --dim: #007700;
-      --highlight: #001100;
-      --border: #004400;
+      --bg: #fff;
+      --text: #1d1d1f;
+      --text-dim: #86868b;
+      --accent: #0071e3;
+      --card: rgba(245, 245, 247, 0.8);
+      --border: rgba(0,0,0,0.08);
+      --shadow: 0 4px 24px rgba(0,0,0,0.08);
+      --shadow-hover: 0 8px 40px rgba(0,0,0,0.12);
     }
-    
-    * { box-sizing: border-box; }
-    
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
     body {
-      margin: 0;
-      padding: 2rem;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
       background: var(--bg);
       color: var(--text);
-      font-family: 'Courier New', monospace;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      min-height: 100vh;
       line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      padding: 2rem 1rem;
+    }
+
+    .container {
+      max-width: 980px;
+      margin: 0 auto;
+    }
+
+    /* 🪄 Header */
+    header {
+      text-align: center;
+      padding: 3rem 0 2rem;
+      animation: fadeIn 0.6s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     h1 {
-      font-size: clamp(1.5rem, 5vw, 2rem);
-      margin: 0 0 2rem;
+      font-size: clamp(2.2rem, 5vw, 3.5rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+      background: linear-gradient(135deg, #1d1d1f, #444);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .tagline {
+      color: var(--text-dim);
+      font-size: 1.1rem;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    /* 🔗 Social Links */
+    .socials {
+      display: flex;
+      justify-content: center;
+      gap: 0.8rem;
+      flex-wrap: wrap;
+      margin: 2rem 0 3rem;
+      animation: slideUp 0.5s ease-out 0.15s both;
+    }
+
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .social-link {
       display: flex;
       align-items: center;
-      gap: 0.5rem;
-    }
-
-    .cursor {
-      width: 10px;
-      height: 1.2rem;
-      background: var(--text);
-      animation: blink 1s steps(2, start) infinite;
-      display: inline-block;
-    }
-
-    @keyframes blink { 50% { opacity: 0; } }
-    
-    @media (prefers-reduced-motion: reduce) {
-      .cursor { animation: none; opacity: 1; }
-      * { animation-duration: 0.01ms !important; }
-    }
-
-    a.button {
-      display: block;
+      gap: 0.4rem;
+      padding: 0.65rem 1.2rem;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 980px;
       color: var(--text);
       text-decoration: none;
-      margin: 0.4rem 0;
-      padding: 0.3rem 0;
-      transition: background 0.2s;
-      width: fit-content;
-    }
-    
-    a.button:hover, a.button:focus {
-      background: var(--highlight);
-      outline: 2px solid var(--text);
-      outline-offset: 2px;
-    }
-    
-    a.button::before { content: '> '; }
-
-    .button-group {
-      margin: 1.5rem 0 1rem;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
+      font-size: 0.95rem;
+      font-weight: 500;
+      transition: all 0.25s ease;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
     }
 
-    button.action {
-      background: none;
-      color: var(--text);
-      border: 1px solid var(--text);
-      padding: 0.5rem 1rem;
-      font-family: inherit;
-      font-size: 0.9rem;
-      cursor: pointer;
-      transition: all 0.2s;
+    .social-link:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-hover);
+      border-color: rgba(0,0,0,0.15);
+      background: rgba(255,255,255,0.9);
     }
 
-    button.action:hover, button.action:focus {
-      background: var(--highlight);
-      outline: 2px solid var(--text);
-      outline-offset: 2px;
-    }
-
-    .hint {
-      font-size: 0.8rem;
-      color: var(--dim);
-      margin-bottom: 0.5rem;
+    .social-link svg {
+      width: 18px;
+      height: 18px;
       opacity: 0.9;
     }
 
-    #priceTable {
-      width: 100%;
-      max-width: 600px;
-      border-collapse: collapse;
-      margin: 1rem 0;
-      display: none;
-      transition: opacity 0.3s;
-    }
-    
-    #priceTable.visible { display: table; }
-
-    th, td {
-      border: 1px solid var(--border);
-      padding: 0.6rem;
-      text-align: left;
+    /* 📦 Products */
+    .section {
+      padding: 1rem 0 2rem;
+      animation: slideUp 0.5s ease-out 0.3s both;
     }
 
-    th {
-      background: var(--highlight);
-      position: sticky;
-      top: 0;
-    }
-
-    input {
-      width: 100%;
-      background: transparent;
-      border: none;
-      color: var(--text);
-      font-family: inherit;
-      font-size: 0.95rem;
-      padding: 0.2rem;
-    }
-    
-    input:focus {
-      outline: 2px solid var(--text);
-      background: var(--highlight);
-    }
-
-    input::placeholder { color: var(--dim); }
-
-    footer {
-      margin-top: auto;
-      padding-top: 2rem;
-      font-size: 0.8rem;
-      color: var(--dim);
+    .section-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
       text-align: center;
+      letter-spacing: -0.01em;
     }
 
-    @media (max-width: 480px) {
-      body { padding: 1rem; }
-      th, td { padding: 0.4rem; font-size: 0.9rem; }
-      input { font-size: 1rem; }
+    .products {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1rem;
+    }
+
+    .product {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 1.3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+    }
+
+    .product:hover {
+      transform: translateY(-4px) scale(1.01);
+      box-shadow: var(--shadow-hover);
+      border-color: rgba(0,113,227,0.3);
+    }
+
+    .product-info {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .product-name {
+      font-weight: 600;
+      font-size: 1.05rem;
+      letter-spacing: -0.01em;
+    }
+
+    .product-desc {
+      font-size: 0.9rem;
+      color: var(--text-dim);
+    }
+
+    .product-price {
+      font-weight: 700;
+      font-size: 1.2rem;
+      color: var(--accent);
+      white-space: nowrap;
+      margin-left: 1rem;
+    }
+
+    /* 🦶 Footer */
+    footer {
+      text-align: center;
+      padding: 3rem 0 2rem;
+      color: var(--text-dim);
+      font-size: 0.9rem;
+      animation: fadeIn 0.6s ease-out 0.45s both;
+    }
+
+    footer a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* 📱 Responsive */
+    @media (max-width: 600px) {
+      body { padding: 1.5rem 1rem; }
+      .product { flex-direction: column; align-items: flex-start; gap: 0.8rem; }
+      .product-price { margin-left: 0; }
+      .socials { gap: 0.6rem; }
+      .social-link { padding: 0.6rem 1rem; font-size: 0.9rem; }
+    }
+
+    /* 🚀 Reduce motion */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation: none !important;
+        transition: none !important;
+        transform: none !important;
+      }
     }
   </style>
 </head>
 <body>
-  <h1>s1ysmil3<span class="cursor" aria-hidden="true"></span></h1>
-
-  <nav aria-label="Main links">
-    <a class="button" href="https://t.me/s1ysmil3" target="_blank" rel="noopener">Telegram</a>
-    <a class="button" href="https://youtube.com/@a1i_yasen" target="_blank" rel="noopener">YouTube Channel</a>
-    <a class="button" href="mailto:a1i.yasen@proton.me">Email Me</a>
-  </nav>
-
-  <div class="button-group">
-    <button class="action" onclick="toggleTable()" aria-controls="priceTable">
-      [p] Toggle Products
-    </button>
-    <button class="action" onclick="downloadCSV()">Export CSV</button>
-    <button class="action" onclick="resetTable()">Clear All</button>
-  </div>
-  
-  <div class="hint">💡 Press <kbd>P</kbd> to toggle table • Data saves automatically</div>
-
-  <table id="priceTable" aria-label="Product price list">
-    <thead>
-      <tr><th>Product</th><th>Price</th></tr>
-    </thead>
-    <tbody id="tableBody"></tbody>
-  </table>
-
-  <footer>
-    -- terminal mode active -- <br>
-    <span id="status" aria-live="polite"></span>
-  </footer>
-
-  <script>
-    // ✅ Safe DOM generation instead of document.write()
-    const tableBody = document.getElementById('tableBody');
-    const status = document.getElementById('status');
-    const STORAGE_KEY = 's1ysmil3_products';
+  <div class="container">
     
-    // Generate 20 rows
-    for (let i = 0; i < 20; i++) {
-      const row = document.createElement('tr');
-      row.innerHTML = `
-        <td><input type="text" data-index="${i}" data-field="name" placeholder="Item ${i+1}" aria-label="Product ${i+1} name"></td>
-        <td><input type="text" data-index="${i}" data-field="price" placeholder="$0.00" aria-label="Product ${i+1} price"></td>
-      `;
-      tableBody.appendChild(row);
-    }
+    <!-- 🪄 Header -->
+    <header>
+      <h1>s1ysmil3</h1>
+      <p class="tagline">Curated digital products. Crafted with care.</p>
+    </header>
 
-    // ✅ Load saved data from localStorage
-    function loadData() {
-      try {
-        const saved = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
-        saved.forEach(item => {
-          const nameInput = document.querySelector(`input[data-index="${item.index}"][data-field="name"]`);
-          const priceInput = document.querySelector(`input[data-index="${item.index}"][data-field="price"]`);
-          if (nameInput && item.name) nameInput.value = item.name;
-          if (priceInput && item.price) priceInput.value = item.price;
-        });
-        showStatus('✓ Data loaded');
-      } catch(e) { console.error('Load failed:', e); }
-    }
+    <!-- 🔗 Social Links -->
+    <div class="socials">
+      <a class="social-link" href="https://t.me/s1ysmil3" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/></svg>
+        Telegram
+      </a>
+      <a class="social-link" href="https://youtube.com/@s1ysmil3" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.2a3.1 3.1 0 00-2.2-2.2C19.7 3.5 12 3.5 12 3.5s-7.7 0-9.3.5A3.1 3.1 0 00.5 6.2 31.3 31.3 0 000 12a31.3 31.3 0 00.5 5.8 3.1 3.1 0 002.2 2.2c1.6.5 9.3.5 9.3.5s7.7 0 9.3-.5a3.1 3.1 0 002.2-2.2A31.3 31.3 0 0024 12a31.3 31.3 0 00-.5-5.8zM9.6 15.6V8.4l6.4 3.6-6.4 3.6z"/></svg>
+        YouTube
+      </a>
+      <a class="social-link" href="https://instagram.com/s1ysmil3" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4c0 3.2-2.6 5.8-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8C2 4.6 4.6 2 7.8 2m-.2 2A3.6 3.6 0 004 7.6v8.8A3.6 3.6 0 007.6 20h8.8a3.6 3.6 0 003.6-3.6V7.6A3.6 3.6 0 0016.4 4H7.6m6.4 3a4 4 0 110 8 4 4 0 010-8m-5.8 0a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4m11.6 0a1 1 0 110 2 1 1 0 010-2z"/></svg>
+        Instagram
+      </a>
+    </div>
 
-    // ✅ Save data with debounce
-    let saveTimeout;
-    function saveData() {
-      clearTimeout(saveTimeout);
-      saveTimeout = setTimeout(() => {
-        const data = [];
-        document.querySelectorAll('#tableBody input').forEach(input => {
-          const idx = input.dataset.index;
-          const field = input.dataset.field;
-          const existing = data.find(d => d.index == idx) || { index: idx };
-          existing[field] = input.value;
-          if (!data.find(d => d.index == idx)) data.push(existing);
-        });
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-        showStatus('✓ Auto-saved');
-      }, 300);
-    }
+    <!-- 📦 Products — EDIT THESE IN HTML -->
+    <section class="section">
+      <h2 class="section-title">Products</h2>
+      <div class="products">
+        <!-- ✏️ Edit product name, description, price below -->
+        <div class="product">
+          <div class="product-info">
+            <span class="product-name">Minimal Icon Pack</span>
+            <span class="product-desc">200+ clean SVG icons</span>
+          </div>
+          <span class="product-price">$8.99</span>
+        </div>
+        <div class="product">
+          <div class="product-info">
+            <span class="product-name">Dark UI Kit</span>
+            <span class="product-desc">Figma + Sketch files</span>
+          </div>
+          <span class="product-price">$14.50</span>
+        </div>
+        <div class="product">
+          <div class="product-info">
+            <span class="product-name">Font Duo: Nova</span>
+            <span class="product-desc">Serif + Sans pair</span>
+          </div>
+          <span class="product-price">$12.00</span>
+        </div>
+        <div class="product">
+          <div class="product-info">
+            <span class="product-name">Wallpaper Set</span>
+            <span class="product-desc">4K abstract backgrounds</span>
+          </div>
+          <span class="product-price">$5.99</span>
+        </div>
+        <!-- ➕ Add more: copy a .product block and paste below -->
+      </div>
+    </section>
 
-    // Event delegation for inputs
-    tableBody.addEventListener('input', (e) => {
-      if (e.target.tagName === 'INPUT') saveData();
-    });
+    <!-- 🦶 Footer -->
+    <footer>
+      <p>© 2026 <strong>s1ysmil3</strong>. All rights reserved.</p>
+      <p style="margin-top:0.4rem">
+        Edit products directly in the HTML file • 
+        <a href="mailto:a1i.yasen@proton.me">Contact</a>
+      </p>
+    </footer>
 
-    // Toggle table with animation + status
-    function toggleTable() {
-      const table = document.getElementById('priceTable');
-      const isVisible = table.classList.toggle('visible');
-      showStatus(isVisible ? '✓ Products shown' : '✓ Products hidden');
-      if (isVisible) table.querySelector('input')?.focus();
-    }
-
-    // ✅ Better CSV export with headers & escaping
-    function downloadCSV() {
-      const headers = ['Product', 'Price'];
-      const rows = Array.from(document.querySelectorAll('#tableBody tr')).map(row => {
-        const [name, price] = row.querySelectorAll('input');
-        return [name.value.trim(), price.value.trim()];
-      }).filter(([n,p]) => n || p); // skip empty rows
-      
-      const csv = [headers, ...rows].map(row => 
-        row.map(field => {
-          if (field.includes(',') || field.includes('"') || field.includes('\n')) {
-            return `"${field.replace(/"/g, '""')}"`;
-          }
-          return field;
-        }).join(',')
-      ).join('\n');
-      
-      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `s1ysmil3_products_${new Date().toISOString().slice(0,10)}.csv`;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
-      showStatus('✓ CSV exported');
-    }
-
-    // Clear all fields
-    function resetTable() {
-      if (confirm('Clear all product entries?')) {
-        document.querySelectorAll('#tableBody input').forEach(i => i.value = '');
-        localStorage.removeItem(STORAGE_KEY);
-        showStatus('✓ Cleared');
-      }
-    }
-
-    // Status message helper
-    function showStatus(msg) {
-      status.textContent = msg;
-      setTimeout(() => { if (status.textContent === msg) status.textContent = ''; }, 2000);
-    }
-
-    // Keyboard shortcut
-    document.addEventListener('keydown', (e) => {
-      if (e.key.toLowerCase() === 'p' && !/input|textarea/i.test(e.target.tagName)) {
-        e.preventDefault();
-        toggleTable();
-      }
-    });
-
-    // Initialize
-    document.addEventListener('DOMContentLoaded', loadData);
-  </script>
+  </div>
 </body>
 </html>
