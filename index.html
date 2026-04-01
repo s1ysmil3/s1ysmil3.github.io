@@ -3,150 +3,305 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="s1ysmil3 - Terminal-style personal hub">
   <title>s1ysmil3</title>
   <style>
+    :root {
+      --bg: #000;
+      --text: #00ff00;
+      --dim: #007700;
+      --highlight: #001100;
+      --border: #004400;
+    }
+    
+    * { box-sizing: border-box; }
+    
     body {
       margin: 0;
-      padding: 0;
-      background: #000;
-      color: #00ff00;
+      padding: 2rem;
+      background: var(--bg);
+      color: var(--text);
       font-family: 'Courier New', monospace;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: flex-start;
-      text-align: left;
       min-height: 100vh;
-      padding: 2rem;
+      line-height: 1.5;
     }
+
     h1 {
-      font-size: 2rem;
-      margin-bottom: 2rem;
+      font-size: clamp(1.5rem, 5vw, 2rem);
+      margin: 0 0 2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
     }
+
+    .cursor {
+      width: 10px;
+      height: 1.2rem;
+      background: var(--text);
+      animation: blink 1s steps(2, start) infinite;
+      display: inline-block;
+    }
+
+    @keyframes blink { 50% { opacity: 0; } }
+    
+    @media (prefers-reduced-motion: reduce) {
+      .cursor { animation: none; opacity: 1; }
+      * { animation-duration: 0.01ms !important; }
+    }
+
     a.button {
       display: block;
-      color: #00ff00;
+      color: var(--text);
       text-decoration: none;
-      margin: 0.5rem 0;
+      margin: 0.4rem 0;
+      padding: 0.3rem 0;
+      transition: background 0.2s;
+      width: fit-content;
     }
-    a.button::before {
-      content: '> ';
+    
+    a.button:hover, a.button:focus {
+      background: var(--highlight);
+      outline: 2px solid var(--text);
+      outline-offset: 2px;
     }
-    .cursor {
-      display: inline-block;
-      width: 10px;
-      height: 1rem;
-      background: #00ff00;
-      animation: blink 1s steps(2, start) infinite;
-      vertical-align: bottom;
-    }
-    table {
-      margin-top: 2rem;
-      border-collapse: collapse;
-      width: 100%;
-      max-width: 500px;
-      color: #00ff00;
-      display: none;
-    }
-    th, td {
-      border: 1px solid #007700;
-      padding: 0.5rem;
-      text-align: left;
-    }
-    th {
-      background-color: #001100;
-    }
-    input {
-      width: 100%;
-      background: #000;
-      border: none;
-      color: #00ff00;
-      font-family: 'Courier New', monospace;
-    }
-    input:focus {
-      outline: none;
-    }
+    
+    a.button::before { content: '> '; }
+
     .button-group {
-      margin-top: 1rem;
+      margin: 1.5rem 0 1rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
     }
+
     button.action {
       background: none;
-      color: #00ff00;
-      border: 1px solid #00ff00;
-      padding: 0.4rem 1rem;
-      font-family: 'Courier New', monospace;
+      color: var(--text);
+      border: 1px solid var(--text);
+      padding: 0.5rem 1rem;
+      font-family: inherit;
+      font-size: 0.9rem;
       cursor: pointer;
-      margin-right: 0.5rem;
+      transition: all 0.2s;
     }
-    button.action:hover {
-      background-color: #001100;
+
+    button.action:hover, button.action:focus {
+      background: var(--highlight);
+      outline: 2px solid var(--text);
+      outline-offset: 2px;
     }
-    footer {
-      margin-top: 4rem;
+
+    .hint {
       font-size: 0.8rem;
-      color: #007700;
+      color: var(--dim);
+      margin-bottom: 0.5rem;
+      opacity: 0.9;
+    }
+
+    #priceTable {
+      width: 100%;
+      max-width: 600px;
+      border-collapse: collapse;
+      margin: 1rem 0;
+      display: none;
+      transition: opacity 0.3s;
+    }
+    
+    #priceTable.visible { display: table; }
+
+    th, td {
+      border: 1px solid var(--border);
+      padding: 0.6rem;
+      text-align: left;
+    }
+
+    th {
+      background: var(--highlight);
+      position: sticky;
+      top: 0;
+    }
+
+    input {
+      width: 100%;
+      background: transparent;
+      border: none;
+      color: var(--text);
+      font-family: inherit;
+      font-size: 0.95rem;
+      padding: 0.2rem;
+    }
+    
+    input:focus {
+      outline: 2px solid var(--text);
+      background: var(--highlight);
+    }
+
+    input::placeholder { color: var(--dim); }
+
+    footer {
+      margin-top: auto;
+      padding-top: 2rem;
+      font-size: 0.8rem;
+      color: var(--dim);
+      text-align: center;
+    }
+
+    @media (max-width: 480px) {
+      body { padding: 1rem; }
+      th, td { padding: 0.4rem; font-size: 0.9rem; }
+      input { font-size: 1rem; }
     }
   </style>
 </head>
 <body>
-  <h1>s1ysmil3<span class="cursor"></span></h1>
+  <h1>s1ysmil3<span class="cursor" aria-hidden="true"></span></h1>
 
-  <a class="button" href="https://t.me/s1ysmil3" target="_blank">Telegram</a>
-  <a class="button" href="https://youtube.com/@a1i_yasen" target="_blank">YouTube Channel</a>
-  <a class="button" href="mailto:a1i.yasen@proton.me">Mail Your Device</a>
+  <nav aria-label="Main links">
+    <a class="button" href="https://t.me/s1ysmil3" target="_blank" rel="noopener">Telegram</a>
+    <a class="button" href="https://youtube.com/@a1i_yasen" target="_blank" rel="noopener">YouTube Channel</a>
+    <a class="button" href="mailto:a1i.yasen@proton.me">Email Me</a>
+  </nav>
 
   <div class="button-group">
-    <button class="action" onclick="toggleTable()">[p] Show/Hide Products</button>
+    <button class="action" onclick="toggleTable()" aria-controls="priceTable">
+      [p] Toggle Products
+    </button>
     <button class="action" onclick="downloadCSV()">Export CSV</button>
+    <button class="action" onclick="resetTable()">Clear All</button>
   </div>
+  
+  <div class="hint">💡 Press <kbd>P</kbd> to toggle table • Data saves automatically</div>
 
-  <table id="priceTable">
+  <table id="priceTable" aria-label="Product price list">
     <thead>
       <tr><th>Product</th><th>Price</th></tr>
     </thead>
-    <tbody>
-      <!-- 20 editable product rows -->
-      <script>
-        document.write(
-          Array.from({ length: 20 }, (_, i) => `
-            <tr>
-              <td><input type="text" placeholder="Item ${i + 1}"></td>
-              <td><input type="text" placeholder="$0.00"></td>
-            </tr>
-          `).join('')
-        );
-      </script>
-    </tbody>
+    <tbody id="tableBody"></tbody>
   </table>
 
   <footer>
-    -- terminal mode active --
+    -- terminal mode active -- <br>
+    <span id="status" aria-live="polite"></span>
   </footer>
 
   <script>
-    const table = document.getElementById('priceTable');
-
-    function toggleTable() {
-      table.style.display = table.style.display === 'none' ? 'table' : 'none';
+    // ✅ Safe DOM generation instead of document.write()
+    const tableBody = document.getElementById('tableBody');
+    const status = document.getElementById('status');
+    const STORAGE_KEY = 's1ysmil3_products';
+    
+    // Generate 20 rows
+    for (let i = 0; i < 20; i++) {
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td><input type="text" data-index="${i}" data-field="name" placeholder="Item ${i+1}" aria-label="Product ${i+1} name"></td>
+        <td><input type="text" data-index="${i}" data-field="price" placeholder="$0.00" aria-label="Product ${i+1} price"></td>
+      `;
+      tableBody.appendChild(row);
     }
 
-    document.addEventListener('keydown', function(e) {
-      if (e.key.toLowerCase() === 'p') toggleTable();
+    // ✅ Load saved data from localStorage
+    function loadData() {
+      try {
+        const saved = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+        saved.forEach(item => {
+          const nameInput = document.querySelector(`input[data-index="${item.index}"][data-field="name"]`);
+          const priceInput = document.querySelector(`input[data-index="${item.index}"][data-field="price"]`);
+          if (nameInput && item.name) nameInput.value = item.name;
+          if (priceInput && item.price) priceInput.value = item.price;
+        });
+        showStatus('✓ Data loaded');
+      } catch(e) { console.error('Load failed:', e); }
+    }
+
+    // ✅ Save data with debounce
+    let saveTimeout;
+    function saveData() {
+      clearTimeout(saveTimeout);
+      saveTimeout = setTimeout(() => {
+        const data = [];
+        document.querySelectorAll('#tableBody input').forEach(input => {
+          const idx = input.dataset.index;
+          const field = input.dataset.field;
+          const existing = data.find(d => d.index == idx) || { index: idx };
+          existing[field] = input.value;
+          if (!data.find(d => d.index == idx)) data.push(existing);
+        });
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+        showStatus('✓ Auto-saved');
+      }, 300);
+    }
+
+    // Event delegation for inputs
+    tableBody.addEventListener('input', (e) => {
+      if (e.target.tagName === 'INPUT') saveData();
     });
 
-    function downloadCSV() {
-      const rows = Array.from(table.querySelectorAll('tbody tr'));
-      const csv = rows.map(row => {
-        const cols = row.querySelectorAll('input');
-        return Array.from(cols).map(input => input.value).join(',');
-      }).join('\n');
-
-      const blob = new Blob([csv], { type: 'text/csv' });
-      const a = document.createElement('a');
-      a.href = URL.createObjectURL(blob);
-      a.download = 'products.csv';
-      a.click();
+    // Toggle table with animation + status
+    function toggleTable() {
+      const table = document.getElementById('priceTable');
+      const isVisible = table.classList.toggle('visible');
+      showStatus(isVisible ? '✓ Products shown' : '✓ Products hidden');
+      if (isVisible) table.querySelector('input')?.focus();
     }
+
+    // ✅ Better CSV export with headers & escaping
+    function downloadCSV() {
+      const headers = ['Product', 'Price'];
+      const rows = Array.from(document.querySelectorAll('#tableBody tr')).map(row => {
+        const [name, price] = row.querySelectorAll('input');
+        return [name.value.trim(), price.value.trim()];
+      }).filter(([n,p]) => n || p); // skip empty rows
+      
+      const csv = [headers, ...rows].map(row => 
+        row.map(field => {
+          if (field.includes(',') || field.includes('"') || field.includes('\n')) {
+            return `"${field.replace(/"/g, '""')}"`;
+          }
+          return field;
+        }).join(',')
+      ).join('\n');
+      
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `s1ysmil3_products_${new Date().toISOString().slice(0,10)}.csv`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      showStatus('✓ CSV exported');
+    }
+
+    // Clear all fields
+    function resetTable() {
+      if (confirm('Clear all product entries?')) {
+        document.querySelectorAll('#tableBody input').forEach(i => i.value = '');
+        localStorage.removeItem(STORAGE_KEY);
+        showStatus('✓ Cleared');
+      }
+    }
+
+    // Status message helper
+    function showStatus(msg) {
+      status.textContent = msg;
+      setTimeout(() => { if (status.textContent === msg) status.textContent = ''; }, 2000);
+    }
+
+    // Keyboard shortcut
+    document.addEventListener('keydown', (e) => {
+      if (e.key.toLowerCase() === 'p' && !/input|textarea/i.test(e.target.tagName)) {
+        e.preventDefault();
+        toggleTable();
+      }
+    });
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', loadData);
   </script>
 </body>
 </html>
