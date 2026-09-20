@@ -3,203 +3,312 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>s1ysmil3</title>
+  <title>s1ysmil3 // TRANSMISSION</title>
+  <meta name="description" content="Curated digital artifacts by s1ysmil3">
+  
+  <!-- Preconnect for lightning-fast font loading -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Space+Grotesk:wght@300;500;700&display=swap" rel="stylesheet">
+
   <style>
-    /* 🍎 Apple-inspired: clean, fast, premium */
+    /* --- 🛸 ALIEN VIBE VARIABLES --- */
     :root {
-      --bg: #fff;
-      --text: #1d1d1f;
-      --text-dim: #86868b;
-      --accent: #0071e3;
-      --card: rgba(245, 245, 247, 0.8);
-      --border: rgba(0,0,0,0.08);
-      --shadow: 0 4px 24px rgba(0,0,0,0.08);
-      --shadow-hover: 0 8px 40px rgba(0,0,0,0.12);
+      --bg-void: #030014;
+      --neon-green: #00ff41;
+      --ufo-cyan: #00f0ff;
+      --nebula-purple: #7000ff;
+      --text-main: #e0e0e0;
+      --text-dim: #8892b0;
+      --glass-bg: rgba(255, 255, 255, 0.03);
+      --glass-border: rgba(0, 240, 255, 0.15);
+      --font-mono: 'Share Tech Mono', monospace;
+      --font-sans: 'Space Grotesk', sans-serif;
     }
 
+    /* --- BASE RESET --- */
     * { box-sizing: border-box; margin: 0; padding: 0; }
-
+    html { scroll-behavior: smooth; }
+    
     body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.5;
+      background-color: var(--bg-void);
+      color: var(--text-main);
+      font-family: var(--font-sans);
+      line-height: 1.6;
       -webkit-font-smoothing: antialiased;
-      padding: 2rem 1rem;
+      min-height: 100vh;
+      position: relative;
+      overflow-x: hidden;
     }
 
+    /* --- BACKGROUND EFFECTS (GPU Accelerated) --- */
+    .bg-grid {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background-image: 
+        linear-gradient(rgba(0, 240, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 240, 255, 0.03) 1px, transparent 1px);
+      background-size: 40px 40px;
+      z-index: -2;
+      pointer-events: none;
+    }
+
+    .bg-glow {
+      position: fixed; top: -20%; left: -20%; width: 140%; height: 140%;
+      background: radial-gradient(circle at center, rgba(112, 0, 255, 0.15) 0%, transparent 60%);
+      z-index: -1;
+      pointer-events: none;
+      animation: pulseGlow 8s infinite alternate ease-in-out;
+    }
+
+    @keyframes pulseGlow {
+      0% { transform: scale(1); opacity: 0.5; }
+      100% { transform: scale(1.1); opacity: 0.8; }
+    }
+
+    /* Retro-futuristic scanline overlay */
+    .scanlines {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: linear-gradient(to bottom, rgba(255,255,255,0) 50%, rgba(0,0,0,0.05) 50%);
+      background-size: 100% 4px;
+      pointer-events: none;
+      z-index: 100;
+      opacity: 0.4;
+    }
+
+    /* --- LAYOUT --- */
     .container {
       max-width: 980px;
       margin: 0 auto;
+      padding: 2rem 1.5rem;
+      position: relative;
+      z-index: 1;
     }
 
-    /* 🪄 Header */
+    /* --- HEADER --- */
     header {
       text-align: center;
-      padding: 3rem 0 2rem;
-      animation: fadeIn 0.6s ease-out;
+      padding: 4rem 0 3rem;
+      animation: fadeIn 0.8s ease-out;
     }
 
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
+      from { opacity: 0; transform: translateY(15px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
+    .terminal-prefix {
+      font-family: var(--font-mono);
+      color: var(--neon-green);
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+      display: block;
+      letter-spacing: 0.1em;
+    }
+
     h1 {
-      font-size: clamp(2.2rem, 5vw, 3.5rem);
+      font-size: clamp(2.5rem, 6vw, 4rem);
       font-weight: 700;
       letter-spacing: -0.02em;
-      margin-bottom: 0.5rem;
-      background: linear-gradient(135deg, #1d1d1f, #444);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
+      margin-bottom: 1rem;
+      color: var(--text-main);
+      text-shadow: 0 0 20px rgba(0, 240, 255, 0.3);
+      display: inline-block;
+      cursor: default;
+    }
+
+    /* Subtle glitch effect on hover */
+    h1:hover {
+      animation: glitch 0.3s cubic-bezier(.25, .46, .45, .94) both infinite;
+      color: var(--ufo-cyan);
+    }
+
+    @keyframes glitch {
+      0% { transform: translate(0); }
+      20% { transform: translate(-2px, 2px); }
+      40% { transform: translate(-2px, -2px); }
+      60% { transform: translate(2px, 2px); }
+      80% { transform: translate(2px, -2px); }
+      100% { transform: translate(0); }
     }
 
     .tagline {
       color: var(--text-dim);
-      font-size: 1.1rem;
+      font-size: 1.15rem;
       max-width: 500px;
       margin: 0 auto;
+      font-weight: 300;
     }
 
-    /* 🔗 Social Links */
+    /* --- SOCIAL LINKS --- */
     .socials {
       display: flex;
       justify-content: center;
-      gap: 0.8rem;
+      gap: 1rem;
       flex-wrap: wrap;
-      margin: 2rem 0 3rem;
-      animation: slideUp 0.5s ease-out 0.15s both;
-    }
-
-    @keyframes slideUp {
-      from { opacity: 0; transform: translateY(12px); }
-      to { opacity: 1; transform: translateY(0); }
+      margin: 2.5rem 0 4rem;
+      animation: fadeIn 0.8s ease-out 0.2s both;
     }
 
     .social-link {
       display: flex;
       align-items: center;
-      gap: 0.4rem;
-      padding: 0.65rem 1.2rem;
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 980px;
-      color: var(--text);
+      gap: 0.5rem;
+      padding: 0.75rem 1.5rem;
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: 8px;
+      color: var(--text-main);
       text-decoration: none;
-      font-size: 0.95rem;
-      font-weight: 500;
-      transition: all 0.25s ease;
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
+      font-family: var(--font-mono);
+      font-size: 0.9rem;
+      letter-spacing: 0.05em;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
     }
 
     .social-link:hover {
-      transform: translateY(-2px);
-      box-shadow: var(--shadow-hover);
-      border-color: rgba(0,0,0,0.15);
-      background: rgba(255,255,255,0.9);
+      border-color: var(--neon-green);
+      color: var(--neon-green);
+      box-shadow: 0 0 20px rgba(0, 255, 65, 0.2);
+      transform: translateY(-3px);
     }
 
     .social-link svg {
       width: 18px;
       height: 18px;
-      opacity: 0.9;
+      fill: currentColor;
     }
 
-    /* 📦 Products */
+    /* --- PRODUCTS SECTION --- */
     .section {
-      padding: 1rem 0 2rem;
-      animation: slideUp 0.5s ease-out 0.3s both;
+      padding: 1rem 0 3rem;
+      animation: fadeIn 0.8s ease-out 0.4s both;
     }
 
     .section-title {
-      font-size: 1.5rem;
-      font-weight: 600;
-      margin-bottom: 1.5rem;
+      font-family: var(--font-mono);
+      font-size: 1.2rem;
+      color: var(--ufo-cyan);
+      margin-bottom: 2rem;
       text-align: center;
-      letter-spacing: -0.01em;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+    }
+
+    .section-title::before, .section-title::after {
+      content: '';
+      height: 1px;
+      width: 60px;
+      background: linear-gradient(90deg, transparent, var(--ufo-cyan), transparent);
     }
 
     .products {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 1rem;
+      gap: 1.5rem;
     }
 
     .product {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 18px;
-      padding: 1.3rem;
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: 12px;
+      padding: 1.5rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
       transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      position: relative;
+      overflow: hidden;
     }
 
+    /* Holographic sweep effect on hover */
+    .product::before {
+      content: '';
+      position: absolute;
+      top: 0; left: -100%;
+      width: 100%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(0, 240, 255, 0.1), transparent);
+      transition: left 0.6s ease;
+      pointer-events: none;
+    }
+
+    .product:hover::before { left: 100%; }
+
     .product:hover {
-      transform: translateY(-4px) scale(1.01);
-      box-shadow: var(--shadow-hover);
-      border-color: rgba(0,113,227,0.3);
+      transform: translateY(-4px);
+      border-color: var(--ufo-cyan);
+      box-shadow: 0 8px 32px rgba(0, 240, 255, 0.15);
     }
 
     .product-info {
       display: flex;
       flex-direction: column;
-      gap: 0.25rem;
+      gap: 0.4rem;
     }
 
     .product-name {
       font-weight: 600;
-      font-size: 1.05rem;
+      font-size: 1.1rem;
+      color: var(--text-main);
       letter-spacing: -0.01em;
     }
 
     .product-desc {
       font-size: 0.9rem;
       color: var(--text-dim);
+      font-family: var(--font-mono);
     }
 
     .product-price {
+      font-family: var(--font-mono);
       font-weight: 700;
-      font-size: 1.2rem;
-      color: var(--accent);
+      font-size: 1.25rem;
+      color: var(--neon-green);
       white-space: nowrap;
-      margin-left: 1rem;
+      text-shadow: 0 0 10px rgba(0, 255, 65, 0.4);
     }
 
-    /* 🦶 Footer */
+    /* --- FOOTER --- */
     footer {
       text-align: center;
       padding: 3rem 0 2rem;
       color: var(--text-dim);
-      font-size: 0.9rem;
-      animation: fadeIn 0.6s ease-out 0.45s both;
+      font-size: 0.85rem;
+      font-family: var(--font-mono);
+      border-top: 1px solid var(--glass-border);
+      margin-top: 2rem;
+      animation: fadeIn 0.8s ease-out 0.6s both;
     }
 
     footer a {
-      color: var(--accent);
+      color: var(--ufo-cyan);
       text-decoration: none;
+      transition: color 0.3s ease, text-shadow 0.3s ease;
     }
 
     footer a:hover {
-      text-decoration: underline;
+      color: var(--neon-green);
+      text-shadow: 0 0 8px var(--neon-green);
     }
 
-    /* 📱 Responsive */
+    /* --- RESPONSIVE --- */
     @media (max-width: 600px) {
-      body { padding: 1.5rem 1rem; }
-      .product { flex-direction: column; align-items: flex-start; gap: 0.8rem; }
-      .product-price { margin-left: 0; }
-      .socials { gap: 0.6rem; }
-      .social-link { padding: 0.6rem 1rem; font-size: 0.9rem; }
+      .container { padding: 1.5rem 1rem; }
+      header { padding: 2rem 0 1.5rem; }
+      .product { flex-direction: column; align-items: flex-start; gap: 1rem; }
+      .product-price { align-self: flex-end; }
+      .socials { gap: 0.75rem; }
+      .social-link { padding: 0.65rem 1.2rem; font-size: 0.85rem; }
     }
 
-    /* 🚀 Reduce motion */
+    /* --- ACCESSIBILITY (Respects user's motion settings) --- */
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after {
         animation: none !important;
@@ -210,35 +319,42 @@
   </style>
 </head>
 <body>
+
+  <!-- Ambient Background Layers -->
+  <div class="bg-grid"></div>
+  <div class="bg-glow"></div>
+  <div class="scanlines"></div>
+
   <div class="container">
     
-    <!-- 🪄 Header -->
+    <!-- Header -->
     <header>
+      <span class="terminal-prefix">> INCOMING TRANSMISSION...</span>
       <h1>s1ysmil3</h1>
       <p class="tagline">Curated digital products. Crafted with care.</p>
     </header>
 
-    <!-- 🔗 Social Links -->
+    <!-- Social Links -->
     <div class="socials">
       <a class="social-link" href="https://t.me/s1ysmil3" target="_blank" rel="noopener">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/></svg>
+        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/></svg>
         Telegram
       </a>
       <a class="social-link" href="https://youtube.com/@s1ysmil3" target="_blank" rel="noopener">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.2a3.1 3.1 0 00-2.2-2.2C19.7 3.5 12 3.5 12 3.5s-7.7 0-9.3.5A3.1 3.1 0 00.5 6.2 31.3 31.3 0 000 12a31.3 31.3 0 00.5 5.8 3.1 3.1 0 002.2 2.2c1.6.5 9.3.5 9.3.5s7.7 0 9.3-.5a3.1 3.1 0 002.2-2.2A31.3 31.3 0 0024 12a31.3 31.3 0 00-.5-5.8zM9.6 15.6V8.4l6.4 3.6-6.4 3.6z"/></svg>
+        <svg viewBox="0 0 24 24"><path d="M23.5 6.2a3.1 3.1 0 00-2.2-2.2C19.7 3.5 12 3.5 12 3.5s-7.7 0-9.3.5A3.1 3.1 0 00.5 6.2 31.3 31.3 0 000 12a31.3 31.3 0 00.5 5.8 3.1 3.1 0 002.2 2.2c1.6.5 9.3.5 9.3.5s7.7 0 9.3-.5a3.1 3.1 0 002.2-2.2A31.3 31.3 0 0024 12a31.3 31.3 0 00-.5-5.8zM9.6 15.6V8.4l6.4 3.6-6.4 3.6z"/></svg>
         YouTube
       </a>
       <a class="social-link" href="https://instagram.com/s1ysmil3" target="_blank" rel="noopener">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4c0 3.2-2.6 5.8-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8C2 4.6 4.6 2 7.8 2m-.2 2A3.6 3.6 0 004 7.6v8.8A3.6 3.6 0 007.6 20h8.8a3.6 3.6 0 003.6-3.6V7.6A3.6 3.6 0 0016.4 4H7.6m6.4 3a4 4 0 110 8 4 4 0 010-8m-5.8 0a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4m11.6 0a1 1 0 110 2 1 1 0 010-2z"/></svg>
+        <svg viewBox="0 0 24 24"><path d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4c0 3.2-2.6 5.8-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8C2 4.6 4.6 2 7.8 2m-.2 2A3.6 3.6 0 004 7.6v8.8A3.6 3.6 0 007.6 20h8.8a3.6 3.6 0 003.6-3.6V7.6A3.6 3.6 0 0016.4 4H7.6m6.4 3a4 4 0 110 8 4 4 0 010-8m-5.8 0a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4m11.6 0a1 1 0 110 2 1 1 0 010-2z"/></svg>
         Instagram
       </a>
     </div>
 
-    <!-- 📦 Products — EDIT THESE IN HTML -->
+    <!-- Products -->
     <section class="section">
-      <h2 class="section-title">Products</h2>
+      <h2 class="section-title">Artifacts</h2>
       <div class="products">
-        <!-- ✏️ Edit product name, description, price below -->
+        
         <div class="product">
           <div class="product-info">
             <span class="product-name">Minimal Icon Pack</span>
@@ -246,6 +362,7 @@
           </div>
           <span class="product-price">$8.99</span>
         </div>
+
         <div class="product">
           <div class="product-info">
             <span class="product-name">Dark UI Kit</span>
@@ -253,6 +370,7 @@
           </div>
           <span class="product-price">$14.50</span>
         </div>
+
         <div class="product">
           <div class="product-info">
             <span class="product-name">Font Duo: Nova</span>
@@ -260,6 +378,7 @@
           </div>
           <span class="product-price">$12.00</span>
         </div>
+
         <div class="product">
           <div class="product-info">
             <span class="product-name">Wallpaper Set</span>
@@ -267,16 +386,16 @@
           </div>
           <span class="product-price">$5.99</span>
         </div>
-        <!-- ➕ Add more: copy a .product block and paste below -->
+
       </div>
     </section>
 
-    <!-- 🦶 Footer -->
+    <!-- Footer -->
     <footer>
       <p>© 2026 <strong>s1ysmil3</strong>. All rights reserved.</p>
-      <p style="margin-top:0.4rem">
-        Edit products directly in the HTML file • 
-        <a href="mailto:a1i.yasen@proton.me">Contact</a>
+      <p style="margin-top: 0.5rem;">
+        Edit artifacts directly in the HTML file • 
+        <a href="mailto:a1i.yasen@proton.me">Establish Uplink</a>
       </p>
     </footer>
 
